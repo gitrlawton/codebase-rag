@@ -15,6 +15,9 @@ export default function Home() {
   const fetchCodebases = async () => {
     const response = await fetch("/api/codebases");
     const data = await response.json();
+
+    console.log("Fetched codebases:", data);
+
     setCodebases(data);
   };
 
@@ -22,7 +25,7 @@ export default function Home() {
     <main className="min-h-screen h-full flex flex-col justify-center bg-gradient-to-br from-black via-blue-900 to-green-900 p-8">
       <div className="max-w-7xl mx-auto w-full">
         <h1 className="text-4xl font-bold mb-8 text-white text-center">
-          Codebase Chat Application
+          G I T / C H A T
         </h1>
         <div className="flex flex-col lg:flex-row gap-8">
           <CodebaseManager

@@ -12,6 +12,8 @@ export default function ChatInterface({ selectedCodebases }) {
 
   const handleSendMessage = async () => {
     if (input.trim() && selectedCodebases.length > 0) {
+      console.log("Selected codebases:", selectedCodebases);
+
       const newMessage = { role: "user", content: input };
       setMessages([...messages, newMessage]);
       setInput("");
@@ -22,6 +24,8 @@ export default function ChatInterface({ selectedCodebases }) {
         body: JSON.stringify({ message: input, codebases: selectedCodebases }),
       });
       const data = await response.json();
+
+      console.log("Chat API response data:", data);
 
       const assistantMessage = { role: "assistant", content: data.response };
       setMessages((prevMessages) => [...prevMessages, assistantMessage]);
@@ -47,7 +51,13 @@ export default function ChatInterface({ selectedCodebases }) {
                     : "bg-white/30 text-white"
                 }`}
               >
-                {message.content}
+                {message.role === "assistant"
+                  ? message.content.split("\n").map((line, lineIndex) => (
+                      <div key={lineIndex} className="whitespace-pre-wrap">
+                        {line}
+                      </div>
+                    ))
+                  : message.content}
               </span>
             </div>
           ))}
